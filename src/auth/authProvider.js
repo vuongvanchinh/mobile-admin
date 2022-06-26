@@ -1,10 +1,12 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import {
     useLocation,
-    Navigate
+    Navigate,
+    useNavigate
   } from "react-router-dom";
 import request from '../utils/request';
 import { keyAuthorization } from '../constants/localStorage'
+import { CircularProgress } from '@mui/material';
 const authProvider = {
     isAuthenticated: false,
     async signin(callback) {
@@ -22,7 +24,7 @@ const authProvider = {
     signout(callback) {
       authProvider.isAuthenticated = false;
       callback()
-      localStorage.removeItem(keyAuthorization)
+      // localStorage.removeItem(keyAuthorization)
     },
 };
 export const AuthContext = React.createContext({});
@@ -31,7 +33,7 @@ export const AuthContext = React.createContext({});
 export const AuthProvider = props => {
     const [user, setUser] = useState(null)
     const [isLoading, setLoading] = useState(true)
-
+  // const navigate = useNavigate()
     useEffect(() => {
       (async () => {
         try {
@@ -50,6 +52,12 @@ export const AuthProvider = props => {
       }
     }, [])
 
+    // useEffect(() =>{
+    //   if(!user) {
+    //     navigate('/login')
+    //   }
+    // }, [user])
+
     const signin = (newUser, callback) => {
       return authProvider.signin(() => {
         setUser(newUser);
@@ -58,18 +66,19 @@ export const AuthProvider = props => {
     };
   
     const signout = (callback) => {
-      return authProvider.signout(() => {
-        setUser(null);
-        callback();
-      });
+      setUser(null);
+      localStorage.removeItem('jwt')
+      callback();
     };
   
     const value = { user, signin, signout };
     console.log("value", value)
     if (isLoading) {
       return (
-        <>Is Loading</>
-      )
+        <div className="min-h-[80vh] flex items-center justify-center">
+            <CircularProgress />
+        </div>
+    )
     }
     return <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>;
 }

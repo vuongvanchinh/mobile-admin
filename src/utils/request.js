@@ -5,7 +5,9 @@ import axios from 'axios'
 export const setKeyAuth = (value) => {
     Authorization = value
 }
-const BACKEND_URL = 'http://localhost:8000/api'
+const BACKEND_URL = 'https://mtapp-a.herokuapp.com/api'
+const LOCAL = 'http://localhost:8000/api'
+const URL = BACKEND_URL
 let Authorization = ''
 const request = async ({
     url = '',
@@ -22,7 +24,7 @@ const request = async ({
         }
 
         const requestOptions = {
-            url: BACKEND_URL + url,
+            url: URL  + url,
             method,
             data,
             params,

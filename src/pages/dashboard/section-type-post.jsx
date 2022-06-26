@@ -30,7 +30,7 @@ const SectionTypePost = () => {
     const f = async () => {
       try {
         const res = request({
-          url: '/motel/stats?type=1',
+          url: '/motel/stats?postType=1',
           method: 'GET'
         }).then(res => {
           const nData = {...d, data: [res.primary, res.secondary]}

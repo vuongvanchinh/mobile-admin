@@ -11,6 +11,7 @@ import { useAuth } from '../../auth/authProvider';
 
 const Login = () => {
     const auth = useAuth()
+    console.log("🚀 ~ file: index.jsx ~ line 14 ~ Login ~ auth", auth)
     const [state, setState] = useState({
         email:'',
         password: '',
@@ -20,6 +21,7 @@ const Login = () => {
     const location = useLocation();
   
     let from = location.state?.from?.pathname || "/";
+    console.log("🚀 ~ file: index.jsx ~ line 23 ~ Login ~ from", from)
 
     const onChange = (e) => {
         console.log(e)
@@ -44,10 +46,11 @@ const Login = () => {
                     password: state.password
                 }
             }).then(data => {
-                // console.log(data)
+                console.log(data)
                 localStorage.setItem(keyAuthorization, 'Bearer ' + data.jwt)
                 auth.signin(data.user, () => {
-                    navigate(from, { replace: true });
+                    console.log("🚀 ~ file: index.jsx ~ line 51 ~ auth.signin ~ data.user", data.user)
+                    // navigate(from, { replace: true });
                 })
                 
             }).catch(err => {
@@ -63,9 +66,14 @@ const Login = () => {
         }
 
     }
-    if (auth.user && auth.user.role === 'admin') {
-        navigate(from, { replace: true });
-    }
+    useEffect(() => {
+        if (auth.user && auth.user.role === 'admin') {
+            console.log("🚀 ~ file: index.jsx ~ line 68 ~ Login ~ auth.user", auth.user)
+            
+            navigate(from, { replace: true });
+        }
+    }, [auth, state.isLoading])
+    
 
     return (
     <div className='flex items-center justify-center h-[100vh]'>

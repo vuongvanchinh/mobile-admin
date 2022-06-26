@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { clear, append, getPosts } from '../../state/features/posts/postsSlice'
 import Table from '../../components/table'
 import { TableCell, TableRow } from '@mui/material';
 import { useNavigate } from "react-router-dom";
@@ -82,7 +80,7 @@ const Posts = () => {
     const f = async () => {
         try {
             request({
-                url: '/motel?censored=false'
+                url: '/motel?censored=true'
             }).then(res => {
                 setData(res)
             })
@@ -96,11 +94,11 @@ const Posts = () => {
   
   return (
     <div className='p-4 shadow-md rounded-md not-shadow bg-000'>
-        <h1 className='heading-02 tet-02 mb-6'>Các post chưa duyệt</h1>
+        <h1 className='heading-02 tet-02 mb-6'>Các post gần đây</h1>
 
        {
          data.length == 0 ?(
-           <div>Tất cả đã được phê duyệt</div>
+           <div>Không có post nào</div>
          ):(
           <Table
             rows={data}

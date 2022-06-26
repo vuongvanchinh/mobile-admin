@@ -99,9 +99,12 @@ export default function CustomPaginationActionsTable({rows={}, columns, renderIt
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
         <TableHead>
-            {columns.map((item, index) => (
+          <TableRow>
+             {columns.map((item, index) => (
                 <TableCell key={index} style={item.style} className='!font-semibold'>{item.display}</TableCell>
             ))}
+          </TableRow>
+           
         </TableHead>
         <TableBody>
           {(rowsPerPage > 0

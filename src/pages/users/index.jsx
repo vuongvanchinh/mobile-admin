@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getUsers } from '../../state/features/users/usersSlice'
 import Table from '../../components/table'
-import { TableCell, TableRow } from '@mui/material';
+import { CircularProgress, TableCell, TableRow } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import timeSince from '../../utils/timeSince';
 const columns = [
@@ -97,7 +97,11 @@ const Users = () => {
    
   }, [])
   if (isLoading) {
-    return "loading"
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center">
+          <CircularProgress />
+      </div>
+  )
   }
   return (
     <div className='page'>

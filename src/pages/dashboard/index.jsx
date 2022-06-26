@@ -22,7 +22,7 @@ const Dashboard = () => {
     Array.from(images).map(img => {
       formData.append("images", img)
     })
-    formData.append('title', 'chinh')
+    // formData.append('title', 'chinh')
     console.log(formData)
     request({
       url: '/motel/6253eabb88dc03fb9b4fab75/upload-image',

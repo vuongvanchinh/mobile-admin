@@ -1,7 +1,5 @@
 import React from 'react'
 import {
-    useResolvedPath,
-    useMatch,
     Link,
     useLocation
 } from 'react-router-dom'

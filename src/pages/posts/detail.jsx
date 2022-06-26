@@ -1,10 +1,9 @@
-import userEvent from '@testing-library/user-event'
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 import request from '../../utils/request'
 import timeSince from '../../utils/timeSince'
-import { Button } from '@mui/material'
+import { Button, CircularProgress } from '@mui/material'
 
 const PostType = {
     0: (
@@ -47,6 +46,11 @@ const PostDetail = () => {
         )
     }
 
+    const utilities = {
+        "wifi": "Wifi","toilet": "WC riêng","ice-cream": "Tủ lạnh","washing-machine": "Máy giặt",
+        "air-conditioner": "Điều hòa","clock": "Tự do gờ giấc","food":"Bếp nấu ăn","motorcycle":"Chỗ để xe"
+    }
+
     useEffect(() => {
         (async() => {
             try {
@@ -63,10 +67,14 @@ const PostDetail = () => {
 
         return () => console.log('Detail unmount')
         
-    }, [])
+    }, [id])
 
     if (!post.createdAt) {
-        return 'Loading...'
+        return (
+            <div className="min-h-[80vh] flex items-center justify-center">
+                <CircularProgress />
+            </div>
+        )
     }
   
     return (
@@ -91,10 +99,26 @@ const PostDetail = () => {
                          {post.owner.name ? post.owner.name:'-_-'}
                     </Link>
                 </div>
-                {PostType[post.type]}
+                {PostType[Number(post.postType)]}
             </div>
             <div className='mb-6'>
                 <p>{post.description}</p>
+            </div>
+            <div className="mb-6">
+                <p className='mb-4'>Các tiện ích</p>
+                <div className="flex gap-4">
+                    {
+                        post.utilities.map((item, index) => (
+                            <div key={index} className="bg-sky-700 text-white px-4 py-1 rounded-md">
+                                {utilities[item]}
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+            <div className='mb-4'>
+                <span className="font-semibold">Giá:</span>
+                <span className='font-bold text-red-500'>{Number(post.rentalPrice)}đ</span>
             </div>
 
             <div className="media">

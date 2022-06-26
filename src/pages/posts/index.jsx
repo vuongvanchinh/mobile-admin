@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { clear, append, getPosts } from '../../state/features/posts/postsSlice'
 import Table from '../../components/table'
-import { TableCell, TableRow } from '@mui/material';
+import { CircularProgress, TableCell, TableRow } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import timeSince from '../../utils/timeSince';
 import priceFormat from '../../utils/priceFormat';
-
+import {clearPosts} from '../../state/features/posts/postsSlice'
 const columns = [
   { 
     display: 'Id',
@@ -87,10 +87,15 @@ const Posts = () => {
     // if (data.length === 0) {
     //    dispatch(getPosts())
     // }
+    dispatch(clearPosts())
     dispatch(getPosts())
   }, [])
   if (isLoading) {
-    return "loading"
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center">
+          <CircularProgress />
+      </div>
+  )
   }
   return (
     <div className='page'>

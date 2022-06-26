@@ -94,9 +94,9 @@ const Users = () => {
     const f = async () => {
       try {
           request({
-              url: '/user?active=false'
+              url: '/user'
           }).then(res => {
-              setData(res)
+              setData(res.slice(1))
           })
       } catch (error) {
           console.log(error)
@@ -110,7 +110,7 @@ const Users = () => {
 
   return (
     <div className='p-4 rounded-md shadow-md not-shadow bg-000'>
-        <h1 className='heading-02 tet-02 mb-6'>Các người dùng mới chờ duyệt</h1>
+        <h1 className='heading-02 tet-02 mb-6'>Các người dùng mới gần đây</h1>
 
         <Table
         className='shadow-none'

@@ -24,7 +24,7 @@ export const postsSlice = createSlice({
       // state.hasNextPage = action.payload.hasNextPage 
     },
     clearPosts: (state) => {
-        // return initialState
+        return initialState
     }
   },
   extraReducers: {
